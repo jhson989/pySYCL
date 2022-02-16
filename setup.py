@@ -6,11 +6,11 @@ import pathlib
 ###########################
 
 core = Extension(
-    name="core",
+    name="pySYCL",
     sources=[
-        "pySYCL/core/cython/core.pyx",
+        "pySYCL/pySYCL.pyx",
     ],
-    libraries=["pySYCL"],
+    libraries=["coreSYCL"],
     library_dirs=["build/"],
     include_dirs=["pySYCL/include"]
 )

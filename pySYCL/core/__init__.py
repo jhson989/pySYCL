@@ -1,1 +1,0 @@
-from pySYCL.lib.core import *

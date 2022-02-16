@@ -1,6 +1,6 @@
 # CMake bianry version
 cmake_minimum_required(VERSION 3.20)
-project(pySYCL)
+project(coreSYCL)
 
 set(PATH_SYCL_BUILD /data/share/oneapi/llvm/build)
 
@@ -24,3 +24,10 @@ target_compile_options(${APP} PUBLIC ${SYCL_COMPILE_OPTION})
 target_link_libraries(${APP} PUBLIC sycl)
 target_link_directories(${APP} PUBLIC ${PATH_SYCL_LIB})
 target_link_options(${APP} PUBLIC ${SYCL_COMPILE_OPTION})
+
+
+
+install(
+    TARGETS coreSYCL 
+    LIBRARY DESTINATION /home/jhson/.lib/
+    )
