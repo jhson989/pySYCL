@@ -12,16 +12,8 @@ core = Extension(
     ],
 )
 
-qis = Extension(
-    name="qis",
-    sources=[
-        "pySYCL/qis/cython/qis.pyx",
-    ],
-)
 extensions = [
-    core,
-    qis,
-    
+    core
 ]
 
 
