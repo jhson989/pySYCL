@@ -10,6 +10,9 @@ core = Extension(
     sources=[
         "pySYCL/core/cython/core.pyx",
     ],
+    libraries=["pySYCL"],
+    library_dirs=["build/"],
+    include_dirs=["pySYCL/include"]
 )
 
 extensions = [
