@@ -1,40 +1,51 @@
 # distutils: language = c++
 # cython: language_level=3
+STUFF = "Hi"
 
 cdef extern from "core.hpp" namespace "pysycl":
     # Device
     cdef cppclass device:
-        device(DEVICE_TYPE)
+        device(DEVICE_TYPE) except +
     # Queue
     cdef cppclass queue:
-        queue(DEVICE_TYPE) 
+        queue(DEVICE_TYPE) except +
+        queue(device* d) except +
 
    
 cdef class Device:
-    cdef device* c_device_p
+    cdef device* c_device
 
-    def __init__(self, device_type):
+    def __cinit__(self, device_type):
 
         if device_type.lower() == "gpu" :
-            self.c_device_p = new device(DEVICE_TYPE_GPU)
+            self.c_device = new device(DEVICE_TYPE_GPU)
         else :
             print("Unsupported device type : " + device_type)
 
-
-    def __del__(self):
-        del self.device
+    def __dealloc__(self):
+        del self.c_device
 
 
 cdef class Queue:
-    cdef device* c_device_p
-    cdef queue* c_queue_p
+    cdef device* c_device
+    cdef queue* c_queue
     
-    def __init__(self, device):
-        print(device)
-        pass
-        #self.c_device_p = device.c_device_p
-        #self.c_queue_p = new queue(self.c_device_p)
+    def __cinit__(self, device_type):
 
-    def __del__(self):
-        pass
-        #del self c_queue_p
+        if device_type.lower() == "gpu" :
+            self.c_device = new device(DEVICE_TYPE_GPU)
+        else :
+            print("Unsupported device type : " + device_type)
+            return
+        self.c_queue = new queue(self.c_device)
+
+
+    def __cinit__(self, Device device):
+        self.c_device = device.c_device
+        self.c_queue = new queue(self.c_device)
+        
+
+    def __dealloc__(self):
+        del self.c_queue
+        
+

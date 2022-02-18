@@ -3,9 +3,18 @@ from Cython.Build import cythonize
 import os
 import pathlib
 
+
+
+#############################################################################
+# Project Configuration
+#############################################################################
+PROJECT_NAME = "pySYCL"
+PROJECT_VERSION = "0.1"
+
 #############################################################################
 # SYCL build configuration
 #############################################################################
+SYCL_COMPILER = "clang++"
 PATH_SYCL_BUILD = "/data/share/oneapi/llvm/build/"
 SYCL_LIBRARY = "sycl"
 PATH_SYCL_LIBRARY = PATH_SYCL_BUILD + "/lib/"
@@ -22,6 +31,7 @@ COMPILE_OPTION_SYCL = [
 # C++ Code
 #############################################################################
 CPP_SOURCES = [
+    "pySYCL/cpp/query.cpp",
     "pySYCL/cpp/core.cpp"
 ]
 
@@ -31,8 +41,12 @@ CPP_SOURCES = [
 NAME_BASE_CYTHON = "pySYCL/interface.pyx"
 
 
+
+#############################################################################
+# Cython build script
+#############################################################################
 pySYCL = Extension(
-    name="pySYCL",
+    name=PROJECT_NAME,
     sources=[
         NAME_BASE_CYTHON,
     ] + CPP_SOURCES,
@@ -47,14 +61,15 @@ pySYCL = Extension(
         ] + PATH_SYCL_INCLUDE,
     language="clang++",
     extra_compile_args=[
-        "-Wno-deprecated-declarations"
+        "-Wno-deprecated-declarations",
+        "-Wno-unused-function"
         ] + COMPILE_OPTION_SYCL
 )
 
-os.environ["CC"] = "clang++"
+os.environ["CC"] = SYCL_COMPILER
 setup(
-    name="pySYCL",
-    version="0.1",
+    name=PROJECT_NAME,
+    version=PROJECT_VERSION,
     author="Janghyun Son",
     author_email="jhson989@gmail.com",
     ext_modules=cythonize(pySYCL)

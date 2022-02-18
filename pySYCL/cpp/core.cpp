@@ -27,7 +27,6 @@ pysycl::device::~device() {
 
 
 
-
 /* ******************************************************************
  * Queue
  * ******************************************************************/
@@ -36,11 +35,21 @@ pysycl::device::~device() {
 /* Constructor */
 pysycl::queue::queue(pysycl::DEVICE_TYPE device_t) 
         : device_(pysycl::device(device_t)) {
-
+    sycl_queue_ = sycl::queue(device_.get_device());
+    printf("1\n");
 }
 pysycl::queue::queue(pysycl::device device) 
         : device_(device) {
+    sycl_queue_ = sycl::queue(device_.get_device());
+    printf("2\n");
+}
 
+pysycl::queue::queue(pysycl::device* device_p) 
+        : device_(*device_p) {
+    if (device_p == nullptr)
+        printf("device null???????????\n");
+    sycl_queue_ = sycl::queue(device_.get_device());
+    printf("3\n");
 }
 
 /* Destructor */
@@ -54,28 +63,4 @@ pysycl::queue::~queue() {
 
 
 
-
-/* ******************************************************************
- * Test code
- * ******************************************************************/
-
-
-void print_sycl() {
-    std::cout << "Hello sycl" << std::endl;
-}
-
-
-void print_properties_host() {
-    
-    sycl::host_selector host;
-    sycl::queue host_q(host);
-
-    sycl::device dev = host_q.get_device();
-    std::cout << "=============== Device Properties ==============" << std::endl;
-    std::cout << "Name: " << dev.get_info<sycl::info::device::name>() << std::endl;
-    std::cout << "Vendor: " << dev.get_info<sycl::info::device::vendor>() << std::endl;
-    std::cout << "Memory size: " << dev.get_info<sycl::info::device::global_mem_size>()/1024.0f/1024.0f/1024.0f << " GB"  << std::endl;
-    std::cout << "================================================" << std::endl << std::endl;
-    
-}
 

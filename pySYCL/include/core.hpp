@@ -28,6 +28,9 @@ class device {
         /* Destructor */
         ~device();
 
+        /* getter */
+        sycl::device& get_device() {return sycl_device_;}
+
 };
 
 /* ******************************************************************
@@ -42,33 +45,18 @@ class queue {
         /* Constructor */
         queue(pysycl::DEVICE_TYPE device_t);
         queue(pysycl::device device);
+        queue(pysycl::device* device_p);
         queue (const queue& q) = delete;
         queue& operator=(const queue& q) = delete;
 
         /* Destructor */
         ~queue();
+
+        /* Getter */
+        sycl::queue& get_queue(){return sycl_queue_;}
 };
 
 
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* ******************************************************************
- * Test code
- * ******************************************************************/
-
-
-void print_sycl();
-void print_properties_host();
