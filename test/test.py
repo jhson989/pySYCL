@@ -1,3 +1,4 @@
 import pySYCL
-print(pySYCL)
-pySYCL.test()
+
+device = pySYCL.Device("gpu")
+queue = pySYCL.Queue(device)
