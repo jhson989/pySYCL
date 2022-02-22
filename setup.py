@@ -32,7 +32,9 @@ COMPILE_OPTION_SYCL = [
 #############################################################################
 CPP_SOURCES = [
     "pySYCL/cpp/query.cpp",
-    "pySYCL/cpp/core.cpp"
+    "pySYCL/cpp/memory.cpp",
+    "pySYCL/cpp/core.cpp",
+    
 ]
 
 #############################################################################

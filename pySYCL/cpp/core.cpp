@@ -49,7 +49,6 @@ pysycl::queue::queue(pysycl::device* device_p)
     if (device_p == nullptr)
         printf("device null???????????\n");
     sycl_queue_ = sycl::queue(device_.get_device());
-    printf("3\n");
 }
 
 /* Destructor */

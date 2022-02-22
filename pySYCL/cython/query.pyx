@@ -8,4 +8,4 @@ cdef extern from "query.hpp" namespace "pysycl":
 
 
 def printProperties(Queue queue):
-    print_properties(queue.c_queue)
+    print_properties(queue.c_queue_)

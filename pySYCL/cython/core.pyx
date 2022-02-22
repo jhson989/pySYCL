@@ -13,39 +13,39 @@ cdef extern from "core.hpp" namespace "pysycl":
 
    
 cdef class Device:
-    cdef device* c_device
+    cdef device* c_device_
 
     def __cinit__(self, device_type):
 
         if device_type.lower() == "gpu" :
-            self.c_device = new device(DEVICE_TYPE_GPU)
+            self.c_device_ = new device(DEVICE_TYPE_GPU)
         else :
             print("Unsupported device type : " + device_type)
 
     def __dealloc__(self):
-        del self.c_device
+        del self.c_device_
 
 
 cdef class Queue:
-    cdef device* c_device
-    cdef queue* c_queue
+    cdef device* c_device_
+    cdef queue* c_queue_
     
     def __cinit__(self, device_type):
 
         if device_type.lower() == "gpu" :
-            self.c_device = new device(DEVICE_TYPE_GPU)
+            self.c_device_ = new device(DEVICE_TYPE_GPU)
         else :
             print("Unsupported device type : " + device_type)
             return
-        self.c_queue = new queue(self.c_device)
+        self.c_queue_ = new queue(self.c_device_)
 
 
     def __cinit__(self, Device device):
-        self.c_device = device.c_device
-        self.c_queue = new queue(self.c_device)
+        self.c_device_ = device.c_device_
+        self.c_queue_ = new queue(self.c_device_)
         
 
     def __dealloc__(self):
-        del self.c_queue
+        del self.c_queue_
         
 
